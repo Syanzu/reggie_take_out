@@ -1,10 +1,11 @@
 server:
   port: 8080
+
+
 spring:
   application:
     # 应用的名称，可选
     name: reggie_take_out
-
   # mysql配置
   datasource:
     druid:
@@ -12,12 +13,15 @@ spring:
       url: jdbc:mysql://localhost:3306/reggie?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: iambest1
-
   # redis配置
   redis:
     host: 192.168.199.130
     port: 6379
     database: 0
+  # 设置缓存的有效期
+  cache:
+    redis:
+      time-to-live: 1800000
 
 
 mybatis-plus:
@@ -34,6 +38,8 @@ mybatis-plus:
 # 自定义参数，用于定义文件保存的地址，后续在其他地方注入该值
 reggie:
   path: /Users/syanzu/Documents/imgs/
+
+
 
 
 

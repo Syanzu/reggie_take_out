@@ -10,6 +10,9 @@ import com.syanzu.reggie.entity.Setmeal;
 import com.syanzu.reggie.service.SetmealService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +36,9 @@ public class SetmealController {
      * @param setmealDto
      * @return
      */
+    // 自动清理redis中的缓存。和List方法中的属于同一类缓存，所以value一致
+    // allEntries = true  -->  将该类缓存全部清除
+    @CacheEvict(value = "setmealCache", allEntries = true)
     @PostMapping
     public R<String> save(@RequestBody SetmealDto setmealDto){
 
@@ -145,6 +151,9 @@ public class SetmealController {
      * @param ids
      * @return
      */
+    // 自动清理redis中的缓存。和List方法中的属于同一类缓存，所以value一致
+    // allEntries = true  -->  将该类缓存全部清除
+    @CacheEvict(value = "setmealCache", allEntries = true)
     @DeleteMapping
     public R<String> delete(@RequestParam List<Long> ids){
         log.info("删除套餐功能，要删除的id为{}", ids);
@@ -155,6 +164,9 @@ public class SetmealController {
     }
 
 
+    // 开启缓存，动态拼接key的值
+    // 调用该方法的时候，返回的数据将自动存入redis缓存中
+    @Cacheable(value = "setmealCache", key = "#setmeal.categoryId + '_' + #setmeal.status")
     @GetMapping("/list")
     //public R<List<Setmeal>> list(@RequestBody Setmeal setmeal){
     public R<List<Setmeal>> list(Setmeal setmeal){
