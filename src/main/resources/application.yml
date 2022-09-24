@@ -63,7 +63,7 @@ mybatis-plus:
 
 # 自定义参数，用于定义文件保存的地址，后续在其他地方注入该值
 reggie:
-  path: /Users/syanzu/Documents/imgs/
+  path: /usr/local/img/
 
 
 
