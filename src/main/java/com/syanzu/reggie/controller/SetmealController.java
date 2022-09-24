@@ -8,6 +8,7 @@ import com.syanzu.reggie.dto.SetmealDto;
 import com.syanzu.reggie.entity.Setmeal;
 
 import com.syanzu.reggie.service.SetmealService;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -22,6 +23,7 @@ import java.util.SplittableRandom;
 /**
  * 套餐管理
  */
+@Api(tags = "套餐相关接口")
 @Slf4j
 @RestController
 @RequestMapping("/setmeal")
@@ -40,6 +42,7 @@ public class SetmealController {
     // allEntries = true  -->  将该类缓存全部清除
     @CacheEvict(value = "setmealCache", allEntries = true)
     @PostMapping
+    @ApiOperation(value = "新增套餐接口")
     public R<String> save(@RequestBody SetmealDto setmealDto){
 
         /*
@@ -61,6 +64,12 @@ public class SetmealController {
      * @return
      */
     @GetMapping("/page")
+    @ApiOperation(value = "套餐分页查询接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "页码", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "每页记录数", required = true),
+            @ApiImplicitParam(name = "name", value = "套餐名称", required = false)
+    })
     public R<Page> page(int page, int pageSize, String name){
 
         /*
@@ -90,6 +99,7 @@ public class SetmealController {
      * @param ids
      * @return
      */
+    @ApiOperation(value = "单个套餐停售接口")
     @PostMapping("/status/0")
     public R<String> sellStop(Long ids){
         // 获取setmeal套餐对象

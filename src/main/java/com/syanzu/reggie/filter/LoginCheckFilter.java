@@ -44,7 +44,12 @@ public class LoginCheckFilter implements Filter {
                 "/front/**",  // 静态页面
                 "/common/**",   // 不用登陆也可以访问 上传功能的controller方法
                 "/user/sendMsg",   // 移动端发送端溪
-                "/user/login"   // 移动端登陆
+                "/user/login",   // 移动端登陆
+                // 以下是Swagger相关
+                "/doc.html",
+                "/webjars/**",
+                "/swagger-resources",
+                "/v2/api-docs"
         };
 
 
